@@ -1,9 +1,9 @@
-use std::fs;
 use std::env;
+use std::fs;
 use std::path::Path;
 
-use rts_codegen::gen_tokens;
 use quote::quote;
+use rts_codegen::gen_tokens;
 
 #[test]
 fn draw() {

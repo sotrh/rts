@@ -6,3 +6,5 @@ edition = "2018"
 
 [dependencies]
 rts_engine = { path = "../rts_engine" }
+anyhow = "1"
+pollster = "0.2"

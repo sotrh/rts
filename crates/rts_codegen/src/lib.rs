@@ -1,4 +1,7 @@
-use naga::{back::spv, valid::{self, Capabilities}};
+use naga::{
+    back::spv,
+    valid::{self, Capabilities},
+};
 use proc_macro2::TokenStream;
 use quote::quote;
 use syn::Token;
@@ -122,7 +125,6 @@ pub fn gen_tokens(source: &str, file_name: &str) -> TokenStream {
         }
         _ => None
     }).collect::<TokenStream>();
-
 
     quote! {
         #![allow(dead_code)]

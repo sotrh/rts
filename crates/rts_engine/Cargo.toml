@@ -3,8 +3,11 @@ name = "rts_engine"
 version = "0.1.0"
 authors = ["Ben Hansen <bhbenjaminhansen@gmail.com>"]
 edition = "2018"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+resolver="2"
 
 [dependencies]
 rts_shaders = { path = "../rts_shaders" }
+anyhow = "1"
+ultraviolet = "0.8"
+wgpu = "0.10"
+winit = "0.25"
