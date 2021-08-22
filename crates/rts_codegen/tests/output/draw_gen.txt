@@ -1,0 +1,384 @@
+Module {
+    types: {
+        [1]: Type {
+            name: None,
+            inner: Vector {
+                size: Bi,
+                kind: Float,
+                width: 4,
+            },
+        },
+        [2]: Type {
+            name: None,
+            inner: Vector {
+                size: Quad,
+                kind: Float,
+                width: 4,
+            },
+        },
+        [3]: Type {
+            name: Some(
+                "VertexOutput",
+            ),
+            inner: Struct {
+                top_level: false,
+                members: [
+                    StructMember {
+                        name: Some(
+                            "uv",
+                        ),
+                        ty: [1],
+                        binding: Some(
+                            Location {
+                                location: 0,
+                                interpolation: Some(
+                                    Perspective,
+                                ),
+                                sampling: Some(
+                                    Center,
+                                ),
+                            },
+                        ),
+                        offset: 0,
+                    },
+                    StructMember {
+                        name: Some(
+                            "position",
+                        ),
+                        ty: [2],
+                        binding: Some(
+                            BuiltIn(
+                                Position,
+                            ),
+                        ),
+                        offset: 16,
+                    },
+                ],
+                span: 32,
+            },
+        },
+        [4]: Type {
+            name: None,
+            inner: Matrix {
+                columns: Quad,
+                rows: Quad,
+                width: 4,
+            },
+        },
+        [5]: Type {
+            name: Some(
+                "Locals",
+            ),
+            inner: Struct {
+                top_level: true,
+                members: [
+                    StructMember {
+                        name: Some(
+                            "transform",
+                        ),
+                        ty: [4],
+                        binding: None,
+                        offset: 0,
+                    },
+                ],
+                span: 64,
+            },
+        },
+        [6]: Type {
+            name: None,
+            inner: Vector {
+                size: Tri,
+                kind: Float,
+                width: 4,
+            },
+        },
+        [7]: Type {
+            name: None,
+            inner: Image {
+                dim: D2,
+                arrayed: false,
+                class: Sampled {
+                    kind: Float,
+                    multi: false,
+                },
+            },
+        },
+        [8]: Type {
+            name: None,
+            inner: Sampler {
+                comparison: false,
+            },
+        },
+    },
+    constants: {
+        [1]: Constant {
+            name: None,
+            specialization: None,
+            inner: Scalar {
+                width: 4,
+                value: Float(
+                    1.0,
+                ),
+            },
+        },
+    },
+    global_variables: {
+        [1]: GlobalVariable {
+            name: Some(
+                "locals",
+            ),
+            class: Uniform,
+            binding: Some(
+                ResourceBinding {
+                    group: 0,
+                    binding: 0,
+                },
+            ),
+            ty: [5],
+            init: None,
+        },
+        [2]: GlobalVariable {
+            name: Some(
+                "color",
+            ),
+            class: Handle,
+            binding: Some(
+                ResourceBinding {
+                    group: 0,
+                    binding: 1,
+                },
+            ),
+            ty: [7],
+            init: None,
+        },
+        [3]: GlobalVariable {
+            name: Some(
+                "sampler",
+            ),
+            class: Handle,
+            binding: Some(
+                ResourceBinding {
+                    group: 0,
+                    binding: 2,
+                },
+            ),
+            ty: [8],
+            init: None,
+        },
+    },
+    functions: {},
+    entry_points: [
+        EntryPoint {
+            name: "vs_main",
+            stage: Vertex,
+            early_depth_test: None,
+            workgroup_size: [
+                0,
+                0,
+                0,
+            ],
+            function: Function {
+                name: Some(
+                    "vs_main",
+                ),
+                arguments: [
+                    FunctionArgument {
+                        name: Some(
+                            "pos",
+                        ),
+                        ty: [6],
+                        binding: Some(
+                            Location {
+                                location: 0,
+                                interpolation: None,
+                                sampling: None,
+                            },
+                        ),
+                    },
+                    FunctionArgument {
+                        name: Some(
+                            "uv",
+                        ),
+                        ty: [1],
+                        binding: Some(
+                            Location {
+                                location: 1,
+                                interpolation: None,
+                                sampling: None,
+                            },
+                        ),
+                    },
+                ],
+                result: Some(
+                    FunctionResult {
+                        ty: [3],
+                        binding: None,
+                    },
+                ),
+                local_variables: {
+                    [1]: LocalVariable {
+                        name: Some(
+                            "out",
+                        ),
+                        ty: [3],
+                        init: None,
+                    },
+                },
+                expressions: {
+                    [1]: GlobalVariable(
+                        [1],
+                    ),
+                    [2]: FunctionArgument(
+                        0,
+                    ),
+                    [3]: FunctionArgument(
+                        1,
+                    ),
+                    [4]: LocalVariable(
+                        [1],
+                    ),
+                    [5]: AccessIndex {
+                        base: [4],
+                        index: 0,
+                    },
+                    [6]: AccessIndex {
+                        base: [4],
+                        index: 1,
+                    },
+                    [7]: AccessIndex {
+                        base: [1],
+                        index: 0,
+                    },
+                    [8]: Load {
+                        pointer: [7],
+                    },
+                    [9]: Constant(
+                        [1],
+                    ),
+                    [10]: Compose {
+                        ty: [2],
+                        components: [
+                            [2],
+                            [9],
+                        ],
+                    },
+                    [11]: Binary {
+                        op: Multiply,
+                        left: [8],
+                        right: [10],
+                    },
+                    [12]: Load {
+                        pointer: [4],
+                    },
+                },
+                named_expressions: {},
+                body: Block {
+                    body: [
+                        Emit(
+                            [5..5],
+                        ),
+                        Store {
+                            pointer: [5],
+                            value: [3],
+                        },
+                        Emit(
+                            [6..8],
+                        ),
+                        Emit(
+                            [10..11],
+                        ),
+                        Store {
+                            pointer: [6],
+                            value: [11],
+                        },
+                        Emit(
+                            [12..12],
+                        ),
+                        Return {
+                            value: Some(
+                                [12],
+                            ),
+                        },
+                    ],
+                },
+            },
+        },
+        EntryPoint {
+            name: "fs_main",
+            stage: Fragment,
+            early_depth_test: None,
+            workgroup_size: [
+                0,
+                0,
+                0,
+            ],
+            function: Function {
+                name: Some(
+                    "fs_main",
+                ),
+                arguments: [
+                    FunctionArgument {
+                        name: Some(
+                            "in",
+                        ),
+                        ty: [3],
+                        binding: None,
+                    },
+                ],
+                result: Some(
+                    FunctionResult {
+                        ty: [2],
+                        binding: Some(
+                            Location {
+                                location: 0,
+                                interpolation: None,
+                                sampling: None,
+                            },
+                        ),
+                    },
+                ),
+                local_variables: {},
+                expressions: {
+                    [1]: GlobalVariable(
+                        [1],
+                    ),
+                    [2]: GlobalVariable(
+                        [2],
+                    ),
+                    [3]: GlobalVariable(
+                        [3],
+                    ),
+                    [4]: FunctionArgument(
+                        0,
+                    ),
+                    [5]: AccessIndex {
+                        base: [4],
+                        index: 0,
+                    },
+                    [6]: ImageSample {
+                        image: [2],
+                        sampler: [3],
+                        coordinate: [5],
+                        array_index: None,
+                        offset: None,
+                        level: Auto,
+                        depth_ref: None,
+                    },
+                },
+                named_expressions: {},
+                body: Block {
+                    body: [
+                        Emit(
+                            [5..6],
+                        ),
+                        Return {
+                            value: Some(
+                                [6],
+                            ),
+                        },
+                    ],
+                },
+            },
+        },
+    ],
+}

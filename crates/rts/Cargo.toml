@@ -1,0 +1,8 @@
+[package]
+name = "rts"
+version = "0.1.0"
+authors = ["Ben Hansen <bhbenjaminhansen@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+rts_engine = { path = "../rts_engine" }
